@@ -50,8 +50,6 @@ if __name__ == "__main__":
     data = np.vstack((insect_data, non_insect_data))
     labels = np.hstack((insect_labels, non_insect_labels))
 
-    # data = data.astype('float32') / 255.0
-
     X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
 
     model = build_model()
@@ -73,8 +71,3 @@ if __name__ == "__main__":
     # Evaluate the model
     accuracy = model.evaluate(X_test, y_test)[1]
     print(f'Accuracy: {accuracy * 100:.2f}%')
-
-    # Load the model weights for testing (optional)
-    def load_model_weights(model, weights_path):
-        model.load_weights(weights_path)
-        print(f'Model weights loaded from {weights_path}')

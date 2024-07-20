@@ -1,7 +1,6 @@
 import os
-import numpy as np
 import cv2
-from use_weights import predict_insect
+from use_weights_cnn import predict_insect
 
 
 def sliding_window(image, window_size, step_size):
@@ -34,14 +33,13 @@ def count_insects_in_image(image_path, store=False, output_dir='counted_insects_
         return cropped_images
 
 if __name__ == "__main__":
-    image_path = 'IMG_5790_raw.JPG'  # Replace with the path to your folder containing images
+    image_path = 'IMG_5790_raw.JPG'
     model_weights_path = 'insect_detection_model.weights.h5'
 
     insects = 0
     notInsects = 0
     
     candidate_insects_images = count_insects_in_image(image_path)
-    print(len(candidate_insects_images))
     for candidate_insect in candidate_insects_images:
         isInsect = predict_insect(model_weights_path, fromPath=False, image=candidate_insect)
         if isInsect:

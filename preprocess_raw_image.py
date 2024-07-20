@@ -70,36 +70,12 @@ def countInsects(image_path, store=False, output_dir='counted_insects'):
         centro = prop.centroid
         radio = prop.major_axis_length / 2
 
-        if prop.area > 5500:
-            circle = plt.Circle((centro[1], centro[0]), radio, color='r', fill=False, linewidth=2)
+        if 500 < prop.area <= 1500:
+            circle = plt.Circle((centro[1], centro[0]), radio, color='m', fill=False, linewidth=2)
             plt.gca().add_patch(circle)
-            plt.text(centro[1], centro[0], '>=5.5', color='r')
+            plt.text(centro[1], centro[0], '1.5-0.5', color='m')
             if store:
-                store_image(image, output_dir, f'>=5.5_{i}', centro[0], centro[1], radio)
-            else:
-                cropped_images.append(crop_image(image, centro[0], centro[1], radio))
-        if 4500 < prop.area <= 5500:
-            circle = plt.Circle((centro[1], centro[0]), radio, color='g', fill=False, linewidth=2)
-            plt.gca().add_patch(circle)
-            plt.text(centro[1], centro[0], '5.5-4.5', color='g')
-            if store:
-                store_image(image, output_dir, f'5.5-4.5_{i}', centro[0], centro[1], radio)
-            else:
-                cropped_images.append(crop_image(image, centro[0], centro[1], radio))
-        if 3500 < prop.area <= 4500:
-            circle = plt.Circle((centro[1], centro[0]), radio, color='y', fill=False, linewidth=2)
-            plt.gca().add_patch(circle)
-            plt.text(centro[1], centro[0], '4.5-3.5', color='y')
-            if store:
-                store_image(image, output_dir, f'4.5-3.5_{i}', centro[0], centro[1], radio)
-            else:
-                cropped_images.append(crop_image(image, centro[0], centro[1], radio))
-        if 2500 < prop.area <= 3500:
-            circle = plt.Circle((centro[1], centro[0]), radio, color='b', fill=False, linewidth=2)
-            plt.gca().add_patch(circle)
-            plt.text(centro[1], centro[0], '3.5-2.5', color='b')
-            if store:
-                store_image(image, output_dir, f'3.5-2.5_{i}', centro[0], centro[1], radio)
+                store_image(image, output_dir, f'1.5-0.5_{i}', centro[0], centro[1], radio)
             else:
                 cropped_images.append(crop_image(image, centro[0], centro[1], radio))
         if 1500 < prop.area <= 2500:
@@ -110,12 +86,36 @@ def countInsects(image_path, store=False, output_dir='counted_insects'):
                 store_image(image, output_dir, f'2.5-1.5_{i}', centro[0], centro[1], radio)
             else:
                 cropped_images.append(crop_image(image, centro[0], centro[1], radio))
-        if 500 < prop.area <= 1500:
-            circle = plt.Circle((centro[1], centro[0]), radio, color='m', fill=False, linewidth=2)
+        if 2500 < prop.area <= 3500:
+            circle = plt.Circle((centro[1], centro[0]), radio, color='b', fill=False, linewidth=2)
             plt.gca().add_patch(circle)
-            plt.text(centro[1], centro[0], '1.5-0.5', color='m')
+            plt.text(centro[1], centro[0], '3.5-2.5', color='b')
             if store:
-                store_image(image, output_dir, f'1.5-0.5_{i}', centro[0], centro[1], radio)
+                store_image(image, output_dir, f'3.5-2.5_{i}', centro[0], centro[1], radio)
+            else:
+                cropped_images.append(crop_image(image, centro[0], centro[1], radio))
+        if 3500 < prop.area <= 4500:
+            circle = plt.Circle((centro[1], centro[0]), radio, color='y', fill=False, linewidth=2)
+            plt.gca().add_patch(circle)
+            plt.text(centro[1], centro[0], '4.5-3.5', color='y')
+            if store:
+                store_image(image, output_dir, f'4.5-3.5_{i}', centro[0], centro[1], radio)
+            else:
+                cropped_images.append(crop_image(image, centro[0], centro[1], radio))
+        if 4500 < prop.area <= 5500:
+            circle = plt.Circle((centro[1], centro[0]), radio, color='g', fill=False, linewidth=2)
+            plt.gca().add_patch(circle)
+            plt.text(centro[1], centro[0], '5.5-4.5', color='g')
+            if store:
+                store_image(image, output_dir, f'5.5-4.5_{i}', centro[0], centro[1], radio)
+            else:
+                cropped_images.append(crop_image(image, centro[0], centro[1], radio))
+        if prop.area > 5500:
+            circle = plt.Circle((centro[1], centro[0]), radio, color='r', fill=False, linewidth=2)
+            plt.gca().add_patch(circle)
+            plt.text(centro[1], centro[0], '>=5.5', color='r')
+            if store:
+                store_image(image, output_dir, f'>=5.5_{i}', centro[0], centro[1], radio)
             else:
                 cropped_images.append(crop_image(image, centro[0], centro[1], radio))
 
