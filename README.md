@@ -13,6 +13,7 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 1. **Tiempos de ejecución**: El promedio del tiempo de segmentación por imagen es de 0.81 segundos, mientras que el promedio de realizar la predicción de cada uno de los segmentos por imagen es de 10.29 segundos.
 
 2. **Modelos**: Los modelos entrenados hasta el momento son CNN, ANN, KNN, NV y Kernel SVM.
+| Salt & Pepper   | Row 1, Col 2    | Row 1, Col 3    |
 
 ## Precisión por Modelo
 
@@ -25,3 +26,13 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 4. **NV**: Accuracy: 0.6956.
 
 5. **Kernel SVM**: Accuracy: 0.9130.
+
+## Precisión CNN según preprocesamiento utilizado en el entrenamiento
+
+| Kernel          | Accuracy  | Loss            |
+| --------------- | ----------| --------------- |
+| Without         | 96%       | 13.14%          |
+| Salt & Pepper   | 100%      | 2.7%            |
+| Poisson         | 100%      | 4.43%           |
+| Rotation        | 93.04%    | 24.15%          |
+| All 3           | 98.13%    | 15.91%          |
