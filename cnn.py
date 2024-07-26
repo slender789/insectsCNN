@@ -7,14 +7,14 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-def preprocess_image(image_path, img_size=(100, 100)):
+def preprocess_image(image_path, img_size=(64, 64)):
     image = cv2.imread(image_path)
     if image is not None:
         image = cv2.resize(image, img_size)
         image = image.astype('float32') / 255.0
     return image
 
-def load_images_from_folder(folder, label, img_size=(100, 100)):
+def load_images_from_folder(folder, label, img_size=(64, 64)):
     images = []
     labels = []
     for filename in os.listdir(folder):
@@ -27,7 +27,7 @@ def load_images_from_folder(folder, label, img_size=(100, 100)):
 
 def build_model():
     return Sequential([
-        Conv2D(32, (3, 3), activation='relu', input_shape=(100, 100, 3)),
+        Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)),
         MaxPooling2D((2, 2)),
         Conv2D(64, (3, 3), activation='relu'),
         MaxPooling2D((2, 2)),

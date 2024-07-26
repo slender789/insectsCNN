@@ -17,15 +17,15 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 
 ## Precisión por Modelo
 
-1. **CNN**: Accuracy: 0.9685.
+1. **CNN**: Accuracy: 0.9861.
 
-2. **ANN**: Accuracy: 0.7826.
+2. **ANN**: Accuracy: 0.9722.
 
-3. **KNN**: Accuracy: 0.8695.
+3. **KNN**: Accuracy: 0.9166.
 
-4. **NV**: Accuracy: 0.6956.
+4. **NV**: Accuracy: 0.9166.
 
-5. **Kernel SVM**: Accuracy: 0.9130.
+5. **Kernel SVM**: Accuracy: 0.9722.
 
 ## Precisión CNN según preprocesamiento utilizado en el entrenamiento
 
@@ -35,4 +35,4 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 | Salt & Pepper   | 100%      | 2.7%            |
 | Poisson         | 100%      | 4.43%           |
 | Rotation        | 93.04%    | 24.15%          |
-| All 3           | 98.13%    | 15.91%          |
+| All 3           | 98.61%    | 15.91%          |

@@ -8,7 +8,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 # Function to load and preprocess images
-def load_images_from_folder(folder, label, image_size=(100, 100)):
+def load_images_from_folder(folder, label, image_size=(64, 64)):
     images = []
     labels = []
     for filename in os.listdir(folder):

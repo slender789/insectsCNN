@@ -26,7 +26,7 @@ def load_images_from_folder(folder, label, image_size=(64, 64)):
 
 def create_model():
     model = Sequential()
-    model.add(Dense(512, input_shape=(64, 64), activation='relu'))
+    model.add(Dense(512, input_shape=(12288,), activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(256, activation='relu'))
     model.add(Dropout(0.5))

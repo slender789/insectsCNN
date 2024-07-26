@@ -3,7 +3,7 @@ import cv2
 import tensorflow as tf
 from cnn import build_model
 
-def preprocess_image(image_path, img_size=(100, 100), fromPath = False, image=None):
+def preprocess_image(image_path, img_size=(64, 64), fromPath = False, image=None):
     if fromPath:
         image = cv2.imread(image_path)
     if image is not None:
