@@ -36,3 +36,14 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 | Poisson         | 100%      | 4.43%           |
 | Rotation        | 93.04%    | 24.15%          |
 | All 3           | 98.61%    | 15.91%          |
+
+## Reporte de clasificación para modelo CNN
+
+|                 | Precision  | Recall    | F1-Score  | Support   |
+| --------------- | -----------| ----------| ----------| ----------|
+| Not a Beetle    | 1.00       | 0.83      | 0.91      | 12        |
+| Beetle          | 0.97       | 1.00      | 0.98      | 60        |
+| Accuracy        |            |           | 0.97      | 72        |
+| Macro Avg       | 0.98       | 0.92      | 0.95      | 72        |
+| Weighted Avg    | 0.97       | 0.97      | 0.97      | 72        |
+

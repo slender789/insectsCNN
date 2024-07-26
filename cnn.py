@@ -2,6 +2,7 @@ import os
 import numpy as np
 import cv2
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, classification_report
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
@@ -71,3 +72,15 @@ if __name__ == "__main__":
     # Evaluate the model
     accuracy = model.evaluate(X_test, y_test)[1]
     print(f'Accuracy: {accuracy * 100:.2f}%')
+
+    # Generate predictions
+    y_pred = (model.predict(X_test) > 0.5).astype("int32")
+
+    # Print confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
+    print('Confusion Matrix:')
+    print(cm)
+
+    # Print classification report
+    print('Classification Report:')
+    print(classification_report(y_test, y_pred))
