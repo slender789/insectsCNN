@@ -1,21 +1,20 @@
 # insectsCNN
 
-Este proyecto se centra en la detección de insectos utilizando una red neuronal convolucional (CNN). A continuación se describen los archivos principales del proyecto:
+This project focuses on insect detection using a convolutional neural network (CNN). Below are the main files of the project:
 
-- **Archivos de imagen**: Los archivos que comienzan con `all_*` contienen las imágenes utilizadas para entrenar el modelo de inteligencia artificial.
+- **Image Files**: Files starting with `all_*` contain the images used to train the AI model.
 
-- **`use_weights.py`**: Utiliza los pesos del modelo entrenado para predecir la categoría de una imagen dada.
+- **`use_weights.py`**: Uses the trained model weights to predict the category of a given image.
 
-- **`preprocess_raw_image.py`**: Realiza el preprocesamiento de la imagen inicial, preparando los datos para la segmentación.
+- **`preprocess_raw_image.py`**: Performs preprocessing on the initial image, preparing the data for segmentation.
 
-## Datos
+## Data
 
-1. **Tiempos de ejecución**: El promedio del tiempo de segmentación por imagen es de 0.81 segundos, mientras que el promedio de realizar la predicción de cada uno de los segmentos por imagen es de 10.29 segundos.
+1. **Execution Times**: The average segmentation time per image is 0.81 seconds, while the average time to make predictions on each segment per image is 10.29 seconds.
 
-2. **Modelos**: Los modelos entrenados hasta el momento son CNN, ANN, KNN, NV y Kernel SVM.
-| Salt & Pepper   | Row 1, Col 2    | Row 1, Col 3    |
+2. **Models**: The models trained so far are CNN, ANN, KNN, NV, and Kernel SVM.
 
-## Precisión por Modelo
+## Accuracy by Model
 
 1. **CNN**: Accuracy: 0.9861.
 
@@ -27,7 +26,7 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 
 5. **Kernel SVM**: Accuracy: 0.9722.
 
-## Precisión CNN según preprocesamiento utilizado en el entrenamiento
+## CNN Accuracy by Preprocessing Used in Training
 
 | Kernel          | Accuracy  | Loss            |
 | --------------- | ----------| --------------- |
@@ -37,7 +36,7 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 | Rotation        | 93.04%    | 24.15%          |
 | All 3           | 98.61%    | 15.91%          |
 
-## Reporte de clasificación para modelo CNN
+## Classification Report for CNN Model
 
 |                 | Precision  | Recall    | F1-Score  | Support   |
 | --------------- | -----------| ----------| ----------| ----------|
@@ -46,4 +45,3 @@ Este proyecto se centra en la detección de insectos utilizando una red neuronal
 | Accuracy        |            |           | 0.97      | 72        |
 | Macro Avg       | 0.98       | 0.92      | 0.95      | 72        |
 | Weighted Avg    | 0.97       | 0.97      | 0.97      | 72        |
-
