@@ -30,11 +30,11 @@ This project focuses on insect detection using a convolutional neural network (C
 
 | Kernel          | Accuracy  | Loss            |
 | --------------- | ----------| --------------- |
-| Without         | 96%       | 13.14%          |
-| Salt & Pepper   | 100%      | 2.7%            |
-| Poisson         | 100%      | 4.43%           |
-| Rotation        | 93.04%    | 24.15%          |
-| All 3           | 98.61%    | 15.91%          |
+ Without         & 96\%       & 13.14\%          \\
+ Salt & Pepper   & 100\%      & 2.7\%            \\
+ Poisson         & 100\%      & 4.43\%           \\
+ Rotation        & 93.04\%    & 24.15\%          \\
+ All 3           & 98.61\%    & 15.91\%          \\
 
 ## Classification Report for CNN Model
 
