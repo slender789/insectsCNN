@@ -37,7 +37,7 @@ y = np.array(insect_labels + no_insect_labels)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Initialize and train the k-NN model
-model = KNeighborsClassifier(n_neighbors=5)
+model = KNeighborsClassifier(n_neighbors=7, weights='distance')
 model.fit(X_train, y_train)
 
 # Evaluate the model

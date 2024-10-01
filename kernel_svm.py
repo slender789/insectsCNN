@@ -37,7 +37,7 @@ y = np.array(insect_labels + no_insect_labels)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Initialize and train the SVM model with RBF kernel
-model = SVC(kernel='rbf', C=1.0, gamma='scale')
+model = SVC(kernel='rbf', C=1.0, gamma=0.01, class_weight='balanced')
 model.fit(X_train, y_train)
 
 # Evaluate the model

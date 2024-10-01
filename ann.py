@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
-# from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 
 # Function to load and preprocess images
@@ -54,7 +54,8 @@ model = create_model()
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
 # Train the model
-model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2)
+early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
+model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2, callbacks=[early_stopping])
 
 # Evaluate the model
 loss, accuracy = model.evaluate(X_test, y_test)
