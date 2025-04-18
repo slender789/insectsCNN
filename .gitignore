@@ -1,0 +1,10 @@
+env/
+ground_truth_highlighted/
+all_insects/
+all_noise/
+all_insects/
+raw_images/
+variable_lighting_images/
+__pycache__/
+.vscode/
+weights/
