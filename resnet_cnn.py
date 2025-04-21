@@ -1,6 +1,6 @@
-import os
 import numpy as np
 import cv2
+from utils.image_utils import load_images_from_folder
 from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import confusion_matrix, classification_report
@@ -12,25 +12,11 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
 
-def preprocess_image_resnet(image_path, img_size=(224, 224)):
-    """Read and preprocess an image for ResNet50."""
-    image = cv2.imread(image_path)
-    if image is not None:
-        image = cv2.resize(image, img_size)
-        image = tf.keras.applications.resnet50.preprocess_input(image)
+def preprocess_image_resnet(image, img_size=(224, 224)):
+    """Resize and preprocess an image for ResNet50."""
+    image = cv2.resize(image, img_size)
+    image = tf.keras.applications.resnet50.preprocess_input(image)
     return image
-
-
-def load_images_from_folder(folder, label, img_size=(224, 224)):
-    """Load and preprocess images from a given folder."""
-    images, labels = [], []
-    for filename in os.listdir(folder):
-        img_path = os.path.join(folder, filename)
-        image = preprocess_image_resnet(img_path, img_size)
-        if image is not None:
-            images.append(image)
-            labels.append(label)
-    return np.array(images), np.array(labels)
 
 
 def build_model():
@@ -91,8 +77,12 @@ def main():
     model_weights_path = 'weights/resnet_cnn.keras'
 
     # Load data
-    insect_data, insect_labels = load_images_from_folder(insect_folder, 1)
-    non_insect_data, non_insect_labels = load_images_from_folder(non_insect_folder, 0)
+    insect_data, insect_labels = load_images_from_folder(
+        insect_folder, 1, image_size=(224, 224), flatten=False, preprocess_fn=preprocess_image_resnet
+    )
+    non_insect_data, non_insect_labels = load_images_from_folder(
+        non_insect_folder, 0, image_size=(224, 224), flatten=False, preprocess_fn=preprocess_image_resnet
+    )
 
     data = np.vstack((insect_data, non_insect_data))
     labels = np.hstack((insect_labels, non_insect_labels))

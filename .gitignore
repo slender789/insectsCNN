@@ -8,3 +8,4 @@ variable_lighting_images/
 __pycache__/
 .vscode/
 weights/
+images.zip

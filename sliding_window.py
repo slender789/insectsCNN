@@ -1,7 +1,7 @@
 import os
 import cv2
 
-from cnn import predict_insect_image
+from resnet_cnn import predict_insect_image
 
 def sliding_window(image, window_size, step_size):
     for y in range(0, image.shape[0] - window_size[1] + 1, step_size[1]):  # Move vertically

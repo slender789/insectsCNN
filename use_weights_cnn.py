@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 import tensorflow as tf
-from cnn import build_model
+from resnet_cnn import build_model
 
 def preprocess_image(image_path, img_size=(64, 64), fromPath = False, image=None):
     if fromPath:

@@ -3,12 +3,12 @@ import sys
 import time
 import cv2
 
-from cnn import predict_insect_image
+from resnet_cnn import predict_insect_image
 from segmentation import segmentation
 from preprocess import preprocess_image
 
 # Configuration
-IMAGE_PATH = 'raw_images/IMG_5784_40.JPG'
+IMAGE_PATH = 'close_raw/IMG_5784.JPG'
 
 def load_image_safe(path: str):
     """Safely load image or raise error."""

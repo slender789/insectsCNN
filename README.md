@@ -1,46 +1,59 @@
-# insectsCNN
+# Bark Beetle Detection and Segmentation Tool
 
-This project focuses on insect detection using a convolutional neural network (CNN). Below are the main files of the project:
+This project provides a modular pipeline for the detection, segmentation, and classification of bark beetles from images taken inside Lindgren traps. The codebase is designed for flexibility, supporting multiple classification algorithms and robust preprocessing and segmentation steps.
 
-- **Image Files**: Files starting with `all_*` contain the images used to train the AI model.
+## Project Overview
 
-- **`use_weights.py`**: Uses the trained model weights to predict the category of a given image.
+The main goal of this project is to automate the identification and counting of bark beetles in trap images. The pipeline includes:
 
-- **`preprocess_raw_image.py`**: Performs preprocessing on the initial image, preparing the data for segmentation.
+- **Preprocessing**: Standardizes and enhances images for further analysis.
+- **Segmentation**: Isolates regions of interest (potential beetles) from the background.
+- **Classification**: Offers several machine learning and deep learning models to classify segmented regions as beetle or non-beetle.
 
-## Data
+## Preprocessing
 
-1. **Execution Times**: The average segmentation time per image is 0.81 seconds, while the average time to make predictions on each segment per image is 10.29 seconds.
+Preprocessing is handled by scripts such as `preprocess.py` and utilities in `utils/image_utils.py`. The typical steps include:
 
-2. **Models**: The models trained so far are CNN, ANN, KNN, NV, and Kernel SVM.
+- **Resizing**: Images are resized to a standard size (e.g., 64x64 or 224x224) for model compatibility.
+- **Normalization**: Pixel values are scaled to [0, 1] or preprocessed for specific models (e.g., ResNet).
+- **Noise Reduction**: Optional noise addition/removal (e.g., Poisson, Gaussian) for data augmentation.
+- **Lighting Adjustment**: Scripts like `create_variable_lightning.py` can simulate different lighting conditions.
 
-## Accuracy by Model
+## Segmentation
 
-1. **CNN**: Accuracy: 0.9861.
+Segmentation is performed using the `segmentation.py` script, which extracts candidate regions (potential beetles) from the input images. The process typically involves:
 
-2. **ANN**: Accuracy: 0.9722.
+- Thresholding and morphological operations to separate foreground (beetles) from background.
+- Filtering by area, aspect ratio, and other geometric properties to reduce false positives.
+- Outputting masks or cropped regions for further classification.
 
-3. **KNN**: Accuracy: 0.9444.
+## Classification Options
 
-4. **NV**: Accuracy: 0.9166.
+The codebase supports several classification approaches, each implemented in its own script:
 
-5. **Kernel SVM**: Accuracy: 0.9583.
+- **Artificial Neural Network (ANN)** (`ann.py`): A simple feedforward neural network for binary classification.
+- **Support Vector Machine (SVM)** (`kernel_svm.py`): Classical machine learning using SVM with RBF kernel.
+- **k-Nearest Neighbors (k-NN)** (`knn.py`): Instance-based learning for beetle detection.
+- **Naive Bayes (NV)** (`nv.py`): Probabilistic classification using Gaussian Naive Bayes.
+- **Simple CNN** (`cnn_simple.py`): A custom convolutional neural network for image classification.
+- **ResNet-based CNN** (`cnn.py`): Deep learning using transfer learning with ResNet50 for high-accuracy classification.
 
-## CNN Accuracy by Preprocessing Used in Training
+All classifiers use a shared, modular image loading and preprocessing utility (`utils/image_utils.py`) for consistency and code reuse.
 
-| Kernel          | Accuracy  | Loss            |
-| --------------- | ----------| --------------- |
- Without          | 96%       | 13.14%          |
- Salt & Pepper    | 100%      | 2.7%            |
- Poisson          | 100%      | 4.43%           |
- All 3            | 98.61%    | 15.91%          |
+## How to Use
 
-## Classification Report for CNN Model
+1. **Preprocess Images**: Use `preprocess.py` or related scripts to standardize your images.
+2. **Segment Images**: Run `segmentation.py` to extract candidate regions.
+3. **Classify Regions**: Choose a classifier script (e.g., `cnn.py`, `ann.py`, `kernel_svm.py`) and follow its instructions to train or predict.
 
-|                 | Precision  | Recall    | F1-Score  | Support   |
-| --------------- | -----------| ----------| ----------| ----------|
-| Not a Beetle    | 1.00       | 0.92      | 0.96      | 12        |
-| Beetle          | 0.98       | 1.00      | 0.99      | 60        |
-| Accuracy        |            |           | 0.99      | 72        |
-| Macro Avg       | 0.99       | 0.96      | 0.97      | 72        |
-| Weighted Avg    | 0.99       | 0.99      | 0.99      | 72        |
+Each script is self-contained and can be run directly. Refer to the script's code for specific usage patterns and parameter options.
+
+## Modularity
+
+- Common functions are centralized in `utils/image_utils.py`.
+- Each classifier and processing step is in its own script for clarity and flexibility.
+- The codebase is structured for easy extension and experimentation with new models or preprocessing techniques.
+
+---
+
+This project provides a complete, modular pipeline for bark beetle detection and segmentation from Lindgren trap images, supporting both classical and deep learning approaches.

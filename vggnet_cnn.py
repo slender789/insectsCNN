@@ -1,9 +1,8 @@
-import os
 import numpy as np
 import cv2
+from utils.image_utils import load_images_from_folder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
-import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Dropout, BatchNormalization, GlobalAveragePooling2D
 from tensorflow.keras.models import Sequential
@@ -17,17 +16,6 @@ def preprocess_image(image_path, img_size=(64, 64)):
         image = cv2.resize(image, img_size)
         image = image.astype('float32') / 255.0
     return image
-
-def load_images_from_folder(folder, label, img_size=(64, 64)):
-    images = []
-    labels = []
-    for filename in os.listdir(folder):
-        img_path = os.path.join(folder, filename)
-        image = preprocess_image(img_path, img_size)
-        if image is not None:
-            images.append(image)
-            labels.append(label)
-    return np.array(images), np.array(labels)
 
 def build_model():
     return Sequential([
@@ -55,8 +43,17 @@ if __name__ == "__main__":
     model_weights_path = 'weigths/vggnet_cnn.keras'
 
     # Load dataset
-    insect_data, insect_labels = load_images_from_folder(insect_folder, 1)
-    non_insect_data, non_insect_labels = load_images_from_folder(non_insect_folder, 0)
+    def preprocess_img_cv2(image, img_size=(64, 64)):
+        image = cv2.resize(image, img_size)
+        image = image.astype('float32') / 255.0
+        return image
+
+    insect_data, insect_labels = load_images_from_folder(
+        insect_folder, 1, image_size=(64, 64), flatten=False, preprocess_fn=preprocess_img_cv2
+    )
+    non_insect_data, non_insect_labels = load_images_from_folder(
+        non_insect_folder, 0, image_size=(64, 64), flatten=False, preprocess_fn=preprocess_img_cv2
+    )
 
     data = np.vstack((insect_data, non_insect_data))
     labels = np.hstack((insect_labels, non_insect_labels))

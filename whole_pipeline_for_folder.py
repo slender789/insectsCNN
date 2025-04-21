@@ -3,7 +3,7 @@ import re
 import time
 from typing import Dict, Tuple
 
-from cnn import predict_insect_image
+from resnet_cnn import predict_insect_image
 from segmentation import segmentation
 from preprocess import preprocess_image
 from whole_pipeline_for_ind import load_image_safe
