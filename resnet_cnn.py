@@ -47,13 +47,13 @@ def predict_insect_image_path(image_path, model_path="weights/resnet_cnn.keras")
     prediction = model.predict(image)[0][0]
     return prediction > 0.5
 
-def predict_insect_image(image: np.ndarray, model_path="weights/resnet_cnn.keras") -> bool:
+def predict_insect_image(image: np.ndarray, model) -> bool:
     """
-    Classify a single image (already read by cv2) using the saved model.
+    Classify a single image (already read by cv2) using a preloaded model.
 
     Parameters:
     - image: np.ndarray, raw BGR image (as read by cv2).
-    - model_path: str, path to the saved model file.
+    - model: keras.Model, preloaded Keras model.
 
     Returns:
     - bool: True if classified as insect, False otherwise.
@@ -66,8 +66,6 @@ def predict_insect_image(image: np.ndarray, model_path="weights/resnet_cnn.keras
     image = tf.keras.applications.resnet50.preprocess_input(image)
     image = np.expand_dims(image, axis=0)  # Add batch dimension
 
-    # Load model and predict
-    model = load_model(model_path)
     prediction = model.predict(image)[0][0]
     return prediction > 0.5
 

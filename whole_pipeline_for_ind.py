@@ -22,15 +22,20 @@ def load_image_safe(path: str):
     return image
 
 
-def count_insects(cropped_images):
+from tensorflow.keras.models import load_model
+
+def count_insects(cropped_images, model_path="weights/resnet_cnn.keras"):
     """Classify cropped images and count insects vs. non-insects."""
     insects = 0
     not_insects = 0
     total_predict_time = 0.0
 
+    # Load the model once
+    model = load_model(model_path)
+
     for candidate_image in cropped_images:
         start = time.time()
-        is_insect = predict_insect_image(candidate_image)
+        is_insect = predict_insect_image(candidate_image, model)
         total_predict_time += time.time() - start
 
         if is_insect:

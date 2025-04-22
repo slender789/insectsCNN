@@ -7,29 +7,28 @@ from segmentation import segmentation
 from preprocess import preprocess_image
 from whole_pipeline_for_ind import count_insects
 
-
 def process_images(input_folder, results_file="docs/whole_pipeline_results.csv"):
     results = []
-    
+
     # Check if results file exists, create it if it doesn't
     if not os.path.exists(results_file):
         with open(results_file, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['filename', 'y_truth', 'y_pred', 'elapsed_time'])  # header
-    
+
     for filename in os.listdir(input_folder):
         original_image_path = os.path.join(input_folder, filename)
-        
+
         if not os.path.isfile(original_image_path):
             continue
-        
+
         # Extract the ground truth insect count from the filename
         try:
             y_truth = int(filename.split('_')[-1].split('.')[0])
         except ValueError:
             print(f"Error extracting ground truth from {filename}, skipping.")
             continue
-        
+
         begin = time.time()
 
         # Load and preprocess the image
