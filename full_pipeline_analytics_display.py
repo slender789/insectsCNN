@@ -24,27 +24,32 @@ def read_results(results_file):
 
 def calculate_metrics(y_truth, y_pred):
     """
-    Calculate performance metrics: exact matches, overcounts, undercounts,
-    mean absolute error, and mean absolute percentage error (MAPE).
+    Calculate performance metrics: overcounts, undercounts,
+    mean absolute error, mean absolute percentage error (MAPE),
+    and average relative accuracy.
     """
-    # Calculate absolute errors
     absolute_errors = np.abs(y_pred - y_truth)
     mean_absolute_error = np.mean(absolute_errors)
 
-    # Calculate Mean Absolute Percentage Error (MAPE)
+    # MAPE
     mape = np.mean(np.abs((y_pred - y_truth) / y_truth)) * 100 if np.all(y_truth != 0) else np.nan
 
-    # Count the number of exact matches, overcounts, and undercounts
-    exact_matches = np.sum(y_pred == y_truth)
+    # Relative accuracy per image, skipping zero ground truths
+    with np.errstate(divide='ignore', invalid='ignore'):
+        relative_accuracy = 1 - (absolute_errors / y_truth)
+        relative_accuracy = np.where(y_truth == 0, np.nan, relative_accuracy)
+        avg_relative_accuracy = np.nanmean(relative_accuracy)
+
+    # Count over/under
     overcounts = np.sum(y_pred > y_truth)
     undercounts = np.sum(y_pred < y_truth)
 
     return {
-        "exact_matches": exact_matches,
         "overcounts": overcounts,
         "undercounts": undercounts,
         "mean_absolute_error": mean_absolute_error,
         "mape": mape,
+        "avg_relative_accuracy": avg_relative_accuracy,
         "absolute_errors": absolute_errors
     }
 
@@ -68,11 +73,11 @@ def main(results_file="docs/segmentation_results.csv"):
 
     # Display the metrics
     print("Performance Metrics:")
-    print(f"Exact matches: {metrics['exact_matches']}")
     print(f"Overcounts: {metrics['overcounts']}")
     print(f"Undercounts: {metrics['undercounts']}")
     print(f"Mean Absolute Error: {metrics['mean_absolute_error']:.2f}")
     print(f"Mean Absolute Percentage Error (MAPE): {metrics['mape']:.2f}%")
+    print(f"Average Relative Accuracy: {metrics['avg_relative_accuracy']:.2%}")
 
     # Plot the distribution of absolute errors
     plot_error_distribution(metrics)
