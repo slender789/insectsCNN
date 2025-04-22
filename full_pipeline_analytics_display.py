@@ -5,11 +5,12 @@ import matplotlib.pyplot as plt
 def read_results(results_file):
     """
     Read the CSV file containing the results of the insect counting.
-    Returns lists of filenames, ground truth values (y_truth), and predicted values (y_pred).
+    Returns filenames, y_truth, y_pred, and elapsed_times as numpy arrays.
     """
     filenames = []
     y_truth = []
     y_pred = []
+    elapsed_times = []
 
     with open(results_file, mode='r') as file:
         reader = csv.reader(file)
@@ -19,8 +20,9 @@ def read_results(results_file):
             filenames.append(row[0])
             y_truth.append(int(row[1]))
             y_pred.append(int(row[2]))
+            elapsed_times.append(float(row[3]))
 
-    return filenames, np.array(y_truth), np.array(y_pred)
+    return filenames, np.array(y_truth), np.array(y_pred), np.array(elapsed_times)
 
 def calculate_metrics(y_truth, y_pred):
     """
@@ -31,16 +33,13 @@ def calculate_metrics(y_truth, y_pred):
     absolute_errors = np.abs(y_pred - y_truth)
     mean_absolute_error = np.mean(absolute_errors)
 
-    # MAPE
     mape = np.mean(np.abs((y_pred - y_truth) / y_truth)) * 100 if np.all(y_truth != 0) else np.nan
 
-    # Relative accuracy per image, skipping zero ground truths
     with np.errstate(divide='ignore', invalid='ignore'):
         relative_accuracy = 1 - (absolute_errors / y_truth)
         relative_accuracy = np.where(y_truth == 0, np.nan, relative_accuracy)
         avg_relative_accuracy = np.nanmean(relative_accuracy)
 
-    # Count over/under
     overcounts = np.sum(y_pred > y_truth)
     undercounts = np.sum(y_pred < y_truth)
 
@@ -54,6 +53,17 @@ def calculate_metrics(y_truth, y_pred):
     }
 
 def plot_error_distribution(metrics):
+    plt.figure(figsize=(8, 6))
+    plt.hist(metrics['absolute_errors'], bins=30, color='lightgreen', edgecolor='black')
+    plt.title('Distribución de error absoluto', fontsize=14)
+    plt.xlabel('Error Absoluto', fontsize=12)
+    plt.ylabel('Frecuencia', fontsize=12)
+    plt.tick_params(axis='both', which='major', labelsize=12)
+    plt.tight_layout()
+    plt.savefig("docs/error_distribution.png")
+    plt.close()
+
+def plot_error_distribution(metrics):
     """
     Plot the distribution of absolute errors.
     """
@@ -63,15 +73,32 @@ def plot_error_distribution(metrics):
     plt.ylabel('Frecuencia', fontsize=12)
     plt.tick_params(axis='both', which='major', labelsize=12)
     plt.show()
+    plt.savefig("docs/error_distribution.png")
 
-def main(results_file="docs/segmentation_results.csv"):
+def plot_time_distribution(elapsed_times):
+    plt.figure(figsize=(8, 6))  # Create a fresh figure
+    plt.hist(elapsed_times, bins=20, color='lightblue', edgecolor='black')
+    plt.title('Distribución del tiempo de procesamiento por imagen', fontsize=14)
+    plt.xlabel('Tiempo (segundos)', fontsize=12)
+    plt.ylabel('Frecuencia', fontsize=12)
+    plt.tick_params(axis='both', which='major', labelsize=12)
+    plt.tight_layout()
+    plt.savefig("docs/time_distribution.png")
+    plt.close()  # Close the figure to prevent reuse
+
+    print("\nElapsed Time Summary:")
+    print(f"- Average Time per Image: {np.mean(elapsed_times):.2f} s")
+    print(f"- Min Time: {np.min(elapsed_times):.2f} s")
+    print(f"- Max Time: {np.max(elapsed_times):.2f} s")
+
+def main(results_file="docs/whole_pipeline_results.csv"):
     # Read results
-    _, y_truth, y_pred = read_results(results_file)
+    _, y_truth, y_pred, elapsed_times = read_results(results_file)
 
     # Calculate metrics
     metrics = calculate_metrics(y_truth, y_pred)
 
-    # Display the metrics
+    # Display performance metrics
     print("Performance Metrics:")
     print(f"Overcounts: {metrics['overcounts']}")
     print(f"Undercounts: {metrics['undercounts']}")
@@ -79,8 +106,9 @@ def main(results_file="docs/segmentation_results.csv"):
     print(f"Mean Absolute Percentage Error (MAPE): {metrics['mape']:.2f}%")
     print(f"Average Relative Accuracy: {metrics['avg_relative_accuracy']:.2%}")
 
-    # Plot the distribution of absolute errors
+    # Plot metrics
     plot_error_distribution(metrics)
+    plot_time_distribution(elapsed_times)
 
 if __name__ == "__main__":
     main()
