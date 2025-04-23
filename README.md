@@ -54,6 +54,10 @@ Each script is self-contained and can be run directly. Refer to the script's cod
 - Each classifier and processing step is in its own script for clarity and flexibility.
 - The codebase is structured for easy extension and experimentation with new models or preprocessing techniques.
 
+## Resources
+
+The images utilized across the codebases can be obtained [here](https://drive.google.com/file/d/1p5y-Ws8wpKsuY65wJagAYCbNkDtgnnyS/view?usp=sharing) (Google Drive link).
+
 ---
 
 This project provides a complete, modular pipeline for bark beetle detection and segmentation from Lindgren trap images, supporting both classical and deep learning approaches.
